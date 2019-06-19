@@ -16,7 +16,7 @@ geom_diagnostics(mapping = NULL, data = NULL, position = "identity",
 default), it is combined with the default mapping at the top level of the
 plot. You must supply \code{mapping} if there is no plot mapping.}
 
-\item{data}{A \code{data.frame} that contains the data used for the seasonal adjustment. By default,}
+\item{data}{A \code{data.frame} that contains the data used for the seasonal adjustment.}
 
 \item{position}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
@@ -70,7 +70,7 @@ p_sa_ipi_fr +
                      ymin = 58, ymax = 72, xmin = 2010,
                      table_theme = gridExtra::ttheme_default(base_size = 8),
                      message = FALSE)
-\donttest{
+
 # To customize the names of the diagnostics in the plot:
     
 diagnostics <- c(`Combined test` = "diagnostics.combined.all.summary",
@@ -92,5 +92,5 @@ p_diag <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
 
 gridExtra::grid.arrange(p_sa_ipi_fr, p_diag,
                         nrow = 2, heights  = c(4, 1))
-}
+
 }
