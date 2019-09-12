@@ -25,15 +25,15 @@ recommended](https://ec.europa.eu/eurostat/cros/system/files/Jdemetra_%20release
 to the members of the European Statistical System (ESS) and the European
 System of Central Banks. RJDemetra implements the two leading seasonal
 adjustment methods
-[TRAMO/SEATS+](http://www.bde.es/bde/en/secciones/servicios/Profesionales/Programas_estadi/Programas_estad_d9fa7f3710fd821.html)
-and [X-12ARIMA/X-13ARIMA-SEATS](https://www.census.gov/srd/www/x13as/).
+[TRAMO/SEATS+](http://gretl.sourceforge.net/tramo/tramo-seats.html) and
+[X-12ARIMA/X-13ARIMA-SEATS](https://www.census.gov/srd/www/x13as/).
 
 There are 4 main functionnalities in `ggdemetra` depending of what you
 want to add in the graphic:
 
   - `geom_sa()`: to add a time series compute during the seasonal
     adjustment (the trend, the seasonal adjusted time series, etc.).  
-  - `geom_outliers()`: to add the outliers used in the pre-adjustment
+  - `geom_outlier()`: to add the outliers used in the pre-adjustment
     process of the seasonal adjustment.
   - `geom_arima()`: to add the ARIMA model used in the pre-adjustment
     process of the seasonal adjustment.
@@ -54,6 +54,10 @@ install.packages("ggdemetra")
 devtools::install_github("AQLT/ggdemetra")
 ```
 
+If you have troubles with the installation of RJDemetra, check the
+[installation
+manual](https://github.com/jdemetra/rjdemetra/wiki/Installation-manual).
+
 ## Usage
 
 By default, the seasonal adjustment is made with X-13-ARIMA with the
@@ -64,11 +68,8 @@ specification), these parameters is inherited from the previous defined:
 therefore you only need to specify the specification once. In the
 following examples, the seasonal adjustment will be perform with
 X-13-ARIMA with working day adjustment and no gradual easter effect
-adjustment:
-
-``` r
-spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
-```
+adjustment (it is the specification that has the most economic sense for
+the industrial production index).
 
 To add the seasonal adjusted series and the forecasts of the input data
 and of the seasonal adjusted series:
@@ -76,6 +77,7 @@ and of the seasonal adjusted series:
 ``` r
 library(ggplot2)
 library(ggdemetra)
+spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
 
 p_ipi_fr <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
     geom_line() +
@@ -89,7 +91,7 @@ p_sa <- p_ipi_fr +
 p_sa
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
 
 To add the outliers at the bottom of the plot with an arrow to the data
 point and the estimated coefficients:
@@ -104,7 +106,7 @@ p_sa +
                                type = "closed", ends = "last"))
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
 
 To add the ARIMA model:
 
@@ -113,10 +115,9 @@ p_sa +
     geom_arima(geom = "label",
                x_arima = -Inf, y_arima = -Inf, 
                vjust = -1, hjust = -0.1)
-#> Frenquency used: 12
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
 
 To add a table of diagnostics below the plot:
 
@@ -132,7 +133,10 @@ p_diag <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
     
 gridExtra::grid.arrange(p_sa, p_diag,
              nrow = 2, heights  = c(4, 1.5))
-#> Frenquency used: 12
 ```
 
-<img src="man/figures/README-unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+
+See the
+[vignette](https://aqlt.github.io/ggdemetra/articles/ggdemetra.html) for
+more details.

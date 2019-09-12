@@ -2,7 +2,7 @@ Package: ggdemetra
 Type: Package
 Title: 'ggplot2' Extension for Seasonal and Trading Day Adjustment with
         'RJDemetra'
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(person("Alain", "Quartier-la-Tente", role = c("aut", "cre"),
                  email = "alain.quartier@yahoo.fr"))
 Description: Provides 'ggplot2' functions to return the results of seasonal and trading day adjustment 
@@ -21,8 +21,8 @@ LazyData: true
 RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-06-19 13:48:11 UTC; ZW20HJ
+Packaged: 2019-09-11 15:54:59 UTC; alainquartierlatente
 Author: Alain Quartier-la-Tente [aut, cre]
 Maintainer: Alain Quartier-la-Tente <alain.quartier@yahoo.fr>
 Repository: CRAN
-Date/Publication: 2019-06-19 15:20:02 UTC
+Date/Publication: 2019-09-12 11:10:02 UTC
