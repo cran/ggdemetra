@@ -1,13 +1,15 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.height = 4,
-  fig.width = 7,
+  fig.dim = c(7,4)*1.4,
   out.width = "100%"
 )
 
-## ---- warning=FALSE, message=FALSE---------------------------------------
+## ---- eval = FALSE------------------------------------------------------------
+#  ipi_c_eu_df <- ts2df(ipi_c_eu)
+
+## ---- warning=FALSE, message=FALSE--------------------------------------------
 library(ggplot2)
 library(ggdemetra)
 p_ipi_fr <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
@@ -16,17 +18,17 @@ p_ipi_fr <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
          x = NULL, y = NULL)
 p_ipi_fr
 
-## ----include=FALSE-------------------------------------------------------
+## ----include=FALSE------------------------------------------------------------
 library(RJDemetra)
 sa <- jx13(ipi_c_eu[, "FR"])
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
 p_ipi_fr +
     geom_sa(color = "red",
             spec = spec)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 p_sa <- p_ipi_fr +
     geom_sa(component = "y_f", linetype = 2, message = FALSE,
             spec = spec) + 
@@ -34,10 +36,10 @@ p_sa <- p_ipi_fr +
     geom_sa(component = "sa_f", color = "red", linetype = 2)
 p_sa
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 p_sa + geom_outlier(geom = "label")
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 p_sa + 
     geom_outlier(geom = "label_repel",
                  vjust = 4,
@@ -45,7 +47,7 @@ p_sa +
                  arrow = arrow(length = unit(0.03, "npc"),
                                type = "closed", ends = "last"))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 p_sa + 
     geom_outlier(geom = "label_repel",
                  first_date = 2009,
@@ -54,20 +56,20 @@ p_sa +
                  arrow = arrow(length = unit(0.03, "npc"),
                                type = "closed", ends = "last"))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 p_sa + 
     geom_arima(geom = "label",
                x_arima = -Inf, y_arima = -Inf, 
                vjust = -1, hjust = -0.1)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 diagnostics <- c("diagnostics.combined.all.summary", "diagnostics.qs", "diagnostics.ftest")
 p_sa + 
     geom_diagnostics(diagnostics = diagnostics,
                      ymin = 58, ymax = 72, xmin = 2010,
                      table_theme = gridExtra::ttheme_default(base_size = 8))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 diagnostics <- c(`Combined test` = "diagnostics.combined.all.summary",
                  `Residual qs-test (p-value)` = "diagnostics.qs",
                  `Residual f-test (p-value)` = "diagnostics.ftest")
@@ -76,7 +78,7 @@ p_sa +
                      ymin = 58, ymax = 72, xmin = 2010,
                      table_theme = gridExtra::ttheme_default(base_size = 8))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 p_diag <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR))  +
     geom_diagnostics(diagnostics = diagnostics,
                      spec = spec,
