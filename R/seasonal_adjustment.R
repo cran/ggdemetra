@@ -1,4 +1,5 @@
 #' @importFrom stats ts is.mts is.ts time
+#' @import RJDemetra
 seasonal_adjustment <- function(data,
                                 method = c("x13","tramoseats"),
                                 spec = NULL,
@@ -46,7 +47,7 @@ seasonal_adjustment <- function(data,
 dataframe2ts <- function(data, frequency = NULL, message = TRUE){
     dates <- data$x
     
-    if (class(dates) == "Date") {
+    if (inherits(dates, "Date")) {
         years <- as.numeric(format(dates, format = "%Y"))
         months <- as.numeric(format(dates, format = "%m"))
         if (is.null(frequency)) {

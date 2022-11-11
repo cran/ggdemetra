@@ -1,3 +1,9 @@
+# ggdemetra 0.2.3
+
+* new functions: `autoplot.SA()` and `autoplot.jSA()` to plot 'RJDemetra' models and `y_forecast()`, ` trendcycle()`, ` seasonaladj()`, ` calendaradj()`, ` seasonal()`, ` irregular()`, ` calendar()` to extract different components of the models.
+
+* `ggdemetra` now depends on `RJDemetra`.
+
 # ggdemetra 0.2.2
 
 * `ts2df` function added to convert `ts` object to `data.frame`.

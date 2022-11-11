@@ -3,9 +3,8 @@
 
 # ggdemetra <img src="man/figures/logo.png" align="right" alt="" />
 
-[![Build
-Status](https://api.travis-ci.com/AQLT/ggdemetra.svg?branch=master)](https://travis-ci.com/AQLT/ggdemetra)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ggdemetra)](https://cran.r-project.org/package=ggdemetra)
+[![R-CMD-check](https://github.com/AQLT/ggdemetra/workflows/R-CMD-check/badge.svg)](https://github.com/AQLT/ggdemetra/actions)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ggdemetra)](https://cran.r-project.org/package=ggdemetra)
 [![CRAN last
 release](http://www.r-pkg.org/badges/last-release/ggdemetra)](https://cran.r-project.org/package=ggdemetra)
 [![CRAN monthly
@@ -25,8 +24,8 @@ recommended](https://ec.europa.eu/eurostat/cros/system/files/Jdemetra_%20release
 to the members of the European Statistical System (ESS) and the European
 System of Central Banks. RJDemetra implements the two leading seasonal
 adjustment methods
-[TRAMO/SEATS+](http://gretl.sourceforge.net/tramo/tramo-seats.html) and
-[X-12ARIMA/X-13ARIMA-SEATS](https://www.census.gov/srd/www/x13as/).
+[TRAMO/SEATS+](https://gretl.sourceforge.net/tramo/tramo-seats.html) and
+[X-12ARIMA/X-13ARIMA-SEATS](https://www.census.gov/data/software/x13as.html).
 
 There are 4 main functionnalities in `ggdemetra` depending of what you
 want to add in the graphic:
@@ -150,3 +149,13 @@ available in RJDemetra:
 ``` r
 ipi_c_eu_df <- ts2df(ipi_c_eu)
 ```
+
+‘RJDemetra’ models can also be automatically plotted with the function
+`autoplot()`:
+
+``` r
+x = RJDemetra::jx13(ipi_c_eu[,"FR"])
+autoplot(x)
+```
+
+<img src="man/figures/README-autoplot-1.png" width="100%" style="display: block; margin: auto;" />
