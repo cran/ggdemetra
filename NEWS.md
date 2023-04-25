@@ -1,3 +1,9 @@
+# ggdemetra 0.2.4
+
+* new functions: `siratio()`, `siratioplot()` and `ggsiratioplot()` to plot SI ratios.
+
+* SystemRequirements update for CRAN policies.
+
 # ggdemetra 0.2.3
 
 * new functions: `autoplot.SA()` and `autoplot.jSA()` to plot 'RJDemetra' models and `y_forecast()`, ` trendcycle()`, ` seasonaladj()`, ` calendaradj()`, ` seasonal()`, ` irregular()`, ` calendar()` to extract different components of the models.
