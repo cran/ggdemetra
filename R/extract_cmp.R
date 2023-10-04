@@ -134,22 +134,38 @@ calendar.jSA <- function(x, forecast = FALSE){
         get_indicators(x, "preprocessing.model.cal")[[1]]
     }
 }
+
 #' @rdname components
 #' @export
-y_forecast <- function(x) {
-    UseMethod("y_forecast", x)
+raw <- function(x, forecast = FALSE) {
+    UseMethod("raw", x)
 }
 #' @export
-y_forecast.SA <- function(x) {
-    y <- get_ts(x)
-    if (inherits(x, "X13")) {
-        jmod <- jx13(y, x13_spec(x))
+raw.SA <- function(x, forecast = FALSE){
+    if (forecast) {
+        x$final$forecasts[,"y_f"]
     } else {
-        jmod <- jx13(y, tramoseats_spec(x))
+        x$final$series[,"y"]
     }
-    y_forecast(jmod)
 }
 #' @export
-y_forecast.jSA <- function(x) {
-    get_indicators(x, "y_f")[[1]]
+raw.jSA <- function(x, forecast = FALSE){
+    if (forecast) {
+        get_indicators(x, "y_f")[[1]]
+    } else {
+        get_indicators(x, "y")[[1]]
+    }
+}
+
+#' Deprecated functions
+#'
+#' @description
+#' Use \code{\link{raw}} with parameter \code{forecast = TRUE} instead of \code{y_forecast}.
+#'
+#' @inheritParams components
+#' @name deprecated-ggdemetra
+#' @export
+y_forecast <- function(x) {
+    .Deprecated("raw", "ggdemetra")
+    raw(x, forecast = TRUE)
 }

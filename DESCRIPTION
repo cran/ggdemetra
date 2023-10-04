@@ -2,7 +2,7 @@ Package: ggdemetra
 Type: Package
 Title: 'ggplot2' Extension for Seasonal and Trading Day Adjustment with
         'RJDemetra'
-Version: 0.2.5
+Version: 0.2.6
 Authors@R: c(person("Alain", "Quartier-la-Tente", role = c("aut", "cre"),
                  email = "alain.quartier@yahoo.fr",
                  comment = c(ORCID = "0000-0001-7890-3857")))
@@ -22,9 +22,9 @@ LazyData: true
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-04-25 19:15:06 UTC; alainquartierlatente
+Packaged: 2023-10-04 14:58:10 UTC; alainquartierlatente
 Author: Alain Quartier-la-Tente [aut, cre]
     (<https://orcid.org/0000-0001-7890-3857>)
 Maintainer: Alain Quartier-la-Tente <alain.quartier@yahoo.fr>
 Repository: CRAN
-Date/Publication: 2023-04-25 20:20:08 UTC
+Date/Publication: 2023-10-04 15:30:02 UTC

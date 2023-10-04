@@ -39,7 +39,9 @@ StatSa <- ggproto("StatSa", Stat,
 )
 #' Seasonal adjustment time series
 #' 
-#' Performs a seasonal adjustment and plots a time seriesAids the eye in seeing patterns in the presence of overplotting. `geom_sa()` and `stat_sa()` are  aliases: they both use the same arguments. Use `stat_sa()` if you want to display the results with a non-standard geom.
+#' Performs a seasonal adjustment and plots a time series. 
+#' `geom_sa()` and `stat_sa()` are  aliases: they both use the same arguments. 
+#' Use `stat_sa()` if you want to display the results with a non-standard geom.
 #' 
 #' @param mapping Set of aesthetic mappings created by [aes()][ggplot2::aes] or
 #'   [aes_()][ggplot2::aes_]. If specified and `inherit.aes = TRUE` (the
@@ -74,19 +76,19 @@ StatSa <- ggproto("StatSa", Stat,
 #'   
 #' @examples 
 #' p_ipi_fr <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
-#'     geom_line() +
+#'     geom_line(color =  "#F0B400") +
 #'     labs(title = "Seasonal adjustment of the French industrial production index",
 #'          x = "time", y = NULL)
 #' 
 #' # To add the seasonal adjusted series:
 #' p_ipi_fr +
-#'     geom_sa(color = "red")
+#'     geom_sa(color = "#155692")
 #' 
 #' # To add the forecasts of the input data and the seasonal adjusted series:
 #' p_sa <- p_ipi_fr +
-#'     geom_sa(component = "y_f", linetype = 2, message = FALSE) + 
-#'     geom_sa(component = "sa", color = "red", message = FALSE) +
-#'     geom_sa(component = "sa_f", color = "red", linetype = 2, message = FALSE)
+#'     geom_sa(component = "y_f", linetype = 2, message = FALSE, color =  "#F0B400") + 
+#'     geom_sa(component = "sa", color = "#155692", message = FALSE) +
+#'     geom_sa(component = "sa_f", color = "#155692", linetype = 2, message = FALSE)
 #' p_sa 
 #' @importFrom ggplot2 GeomLine
 #' @export

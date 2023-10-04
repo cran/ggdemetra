@@ -14,30 +14,19 @@ downloads](http://cranlogs.r-pkg.org/badges/grand-total/ggdemetra?color=lightgre
 
 ## Overview
 
-ggdemetra is an extension of
-[ggplot2](https://github.com/tidyverse/ggplot2) to add seasonal
-adjustment statistics to your plots. The seasonal adjustment process is
-done with [RJDemetra](https://github.com/jdemetra/rjdemetra) that is an
-R interface to [JDemetra+](https://github.com/jdemetra/jdemetra-app),
-the seasonal adjustment software [officially
-recommended](https://cros-legacy.ec.europa.eu/system/files/Jdemetra_ release.pdf)
-to the members of the European Statistical System (ESS) and the European
-System of Central Banks. RJDemetra implements the two leading seasonal
-adjustment methods
-[TRAMO/SEATS+](https://gretl.sourceforge.net/tramo/tramo-seats.html) and
-[X-12ARIMA/X-13ARIMA-SEATS](https://www.census.gov/data/software/x13as.html).
+ggdemetra is an extension of [ggplot2](https://github.com/tidyverse/ggplot2) to add seasonal adjustment statistics to your plots. The seasonal adjustment process is done with [RJDemetra](https://github.com/jdemetra/rjdemetra) that is an R interface to [JDemetra+](https://github.com/jdemetra/jdemetra-app), the seasonal adjustment software [officially recommended](<https://cros-legacy.ec.europa.eu/system/files/Jdemetra_ release.pdf>) to the members of the European Statistical System (ESS) and the European System of Central Banks. RJDemetra implements the two leading seasonal adjustment methods [TRAMO/SEATS+](https://gretl.sourceforge.net/tramo/tramo-seats.html) and [X-12ARIMA/X-13ARIMA-SEATS](https://www.census.gov/data/software/x13as.html).
 
 There are 4 main functionnalities in `ggdemetra` depending of what you
 want to add in the graphic:
 
--   `geom_sa()`: to add a time series compute during the seasonal
-    adjustment (the trend, the seasonal adjusted time series, etc.).  
--   `geom_outlier()`: to add the outliers used in the pre-adjustment
-    process of the seasonal adjustment.
--   `geom_arima()`: to add the ARIMA model used in the pre-adjustment
-    process of the seasonal adjustment.
--   `geom_diagnostics()`: to add a table containing some diagnostics on
-    the seasonal adjustment process.
+- `geom_sa()`: to add a time series compute during the seasonal
+  adjustment (the trend, the seasonal adjusted time series, etc.).  
+- `geom_outlier()`: to add the outliers used in the pre-adjustment
+  process of the seasonal adjustment.
+- `geom_arima()`: to add the ARIMA model used in the pre-adjustment
+  process of the seasonal adjustment.
+- `geom_diagnostics()`: to add a table containing some diagnostics on
+  the seasonal adjustment process.
 
 ## Installation
 
@@ -78,18 +67,18 @@ library(ggplot2)
 library(ggdemetra)
 spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
 p_ipi_fr <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
-    geom_line() +
+    geom_line(color =  "#F0B400") +
     labs(title = "Seasonal adjustment of the French industrial production index",
          x = NULL, y = NULL)
 p_sa <- p_ipi_fr +
     geom_sa(component = "y_f", linetype = 2,
-            spec = spec) + 
-    geom_sa(component = "sa", color = "red") +
-    geom_sa(component = "sa_f", color = "red", linetype = 2)
+            spec = spec, frequency = 12, color =  "#F0B400") + 
+    geom_sa(component = "sa", color = "#155692") +
+    geom_sa(component = "sa_f", color = "#155692", linetype = 2)
 p_sa
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-sa-1.png" width="100%" style="display: block; margin: auto;" />
 
 To add the outliers at the bottom of the plot with an arrow to the data
 point and the estimated coefficients:
@@ -98,14 +87,13 @@ point and the estimated coefficients:
 p_sa + 
     geom_outlier(geom = "label_repel",
                  coefficients = TRUE,
-                 vjust = 4,
-                 ylim = c(NA, 65), force = 10,
+                 ylim = c(NA, 65), 
                  arrow = arrow(length = unit(0.03, "npc"),
                                type = "closed", ends = "last"),
                  digits = 2)
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-sa-out-1.png" width="100%" style="display: block; margin: auto;" />
 
 To add the ARIMA model:
 
@@ -116,7 +104,7 @@ p_sa +
                vjust = -1, hjust = -0.1)
 ```
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-sa-arima-1.png" width="100%" style="display: block; margin: auto;" />
 
 To add a table of diagnostics below the plot:
 
@@ -127,14 +115,14 @@ diagnostics <- c(`Combined test` = "diagnostics.combined.all.summary",
 p_diag <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +
     geom_diagnostics(diagnostics = diagnostics,
                      table_theme = gridExtra::ttheme_default(base_size = 8),
-                     message = FALSE) + 
+                     spec = spec, frequency = 12) + 
     theme_void()
     
 gridExtra::grid.arrange(p_sa, p_diag,
              nrow = 2, heights  = c(4, 1.5))
 ```
 
-<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" />
+<img src="man/figures/README-sa-diag-1.png" width="100%" style="display: block; margin: auto;" />
 
 See the
 [vignette](https://aqlt.github.io/ggdemetra/articles/ggdemetra.html) for
@@ -150,12 +138,40 @@ available in RJDemetra:
 ipi_c_eu_df <- ts2df(ipi_c_eu)
 ```
 
-‘RJDemetra’ models can also be automatically plotted with the function
-`autoplot()`:
+## Existing models
+
+ggdemetra offers several function that can be used to manipulate
+existing models.
+
+The different components of seasonal adjustment models can be extracted
+through `calendar()`, `calendaradj()`, `irregular()`, `trendcycle()`,
+`seasonal()`, `seasonaladj()`, `trendcycle()` and `raw()`.
+
+If you already have a seasonally adjusted model you can also used the
+function `init_ggplot()` :
 
 ``` r
-x = RJDemetra::jx13(ipi_c_eu[,"FR"])
-autoplot(x)
+spec <- RJDemetra::x13_spec("RSA3", tradingdays.option = "WorkingDays")
+mod <- RJDemetra::x13(ipi_c_eu[,"FR"], spec)
+init_ggplot(mod) +
+    geom_line(color =  "#F0B400") +
+    geom_sa(component = "sa", color = "#155692")
+```
+
+<img src="man/figures/README-sa-init-1.png" width="100%" style="display: block; margin: auto;" />
+
+There is also an `autoplot()` function:
+
+``` r
+autoplot(mod)
 ```
 
 <img src="man/figures/README-autoplot-1.png" width="100%" style="display: block; margin: auto;" />
+
+SI-ratio plots can be plotted with `siratioplot` and `ggsiratioplot`:
+
+``` r
+ggsiratioplot(mod)
+```
+
+<img src="man/figures/README-ggsiratio-1.png" width="100%" style="display: block; margin: auto;" />
