@@ -7,10 +7,10 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
-## ---- eval = FALSE------------------------------------------------------------
+## ----eval = FALSE-------------------------------------------------------------
 #  ipi_c_eu_df <- ts2df(ipi_c_eu)
 
-## ---- warning=FALSE, message=FALSE--------------------------------------------
+## ----warning=FALSE, message=FALSE---------------------------------------------
 library(ggplot2)
 library(ggdemetra)
 p_ipi_fr <- ggplot(data = ipi_c_eu_df, mapping = aes(x = date, y = FR)) +

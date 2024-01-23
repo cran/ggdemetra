@@ -98,7 +98,7 @@ calendaradj.SA <- function(x, forecast = FALSE){
     if (inherits(x, "X13")) {
         jmod <- jx13(y, x13_spec(x))
     } else {
-        jmod <- jx13(y, tramoseats_spec(x))
+        jmod <- jtramoseats(y, tramoseats_spec(x))
     }
     calendaradj(jmod, forecast = forecast)
 }
@@ -122,7 +122,7 @@ calendar.SA <- function(x, forecast = FALSE){
     if (inherits(x, "X13")) {
         jmod <- jx13(y, x13_spec(x))
     } else {
-        jmod <- jx13(y, tramoseats_spec(x))
+        jmod <- jtramoseats(y, tramoseats_spec(x))
     }
     calendar(jmod, forecast = forecast)
 }
@@ -155,17 +155,4 @@ raw.jSA <- function(x, forecast = FALSE){
     } else {
         get_indicators(x, "y")[[1]]
     }
-}
-
-#' Deprecated functions
-#'
-#' @description
-#' Use \code{\link{raw}} with parameter \code{forecast = TRUE} instead of \code{y_forecast}.
-#'
-#' @inheritParams components
-#' @name deprecated-ggdemetra
-#' @export
-y_forecast <- function(x) {
-    .Deprecated("raw", "ggdemetra")
-    raw(x, forecast = TRUE)
 }
